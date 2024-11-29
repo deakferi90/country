@@ -1,39 +1,42 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ThemeService } from '../services/theme.service';
-import { CommonModule } from '@angular/common';
-import { isPlatformBrowser } from '@angular/common';
-import { Inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { PLATFORM_ID } from '@angular/core';
 import { SwitchComponent } from './switch/switch.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, SwitchComponent],
+  imports: [SwitchComponent, CommonModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  currentTheme: string = ''; // We'll store the current theme here
+  dark: boolean = false; // Boolean flag to represent the current theme (light or dark)
 
   constructor(
     private themeService: ThemeService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object // Inject PLATFORM_ID
   ) {}
 
   ngOnInit(): void {
-    // Initialize the currentTheme from the service
-    this.currentTheme = this.themeService.getCurrentTheme();
-
-    // Apply the theme to the document body only in the browser
+    // Check if the code is running in the browser
     if (isPlatformBrowser(this.platformId)) {
-      document.body.className = this.currentTheme;
+      // Initialize the current theme from the service
+      this.dark = this.themeService.getCurrentTheme() === 'dark'; // Set dark or light based on service
+      // Apply the theme to the document body
+      document.body.className = this.dark ? 'dark' : 'light';
     }
   }
 
-  // Method to toggle theme
-  onThemeToggle(): void {
-    this.themeService.toggleTheme();
-    // Update the currentTheme variable after toggling
-    this.currentTheme = this.themeService.getCurrentTheme();
+  // Method to update the theme based on the event from the child component
+  onThemeChange(isDark: boolean): void {
+    this.dark = isDark;
+    // Save the new theme to localStorage and update the document body
+    this.themeService.setThemeToLocalStorage(isDark ? 'dark' : 'light');
+
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.className = isDark ? 'dark' : 'light';
+    }
   }
 }

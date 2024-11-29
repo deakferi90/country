@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-switch',
@@ -8,8 +8,11 @@ import { Component } from '@angular/core';
   styleUrl: './switch.component.scss',
 })
 export class SwitchComponent {
-  dark: boolean = true;
+  dark: boolean = false;
+  @Output() themeChanged = new EventEmitter<boolean>();
+
   switchTheme() {
     this.dark = !this.dark;
+    this.themeChanged.emit(this.dark);
   }
 }
