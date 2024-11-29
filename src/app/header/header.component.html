@@ -1,6 +1,11 @@
 <div
-  [ngClass]="{ 'bg-gray-900': dark, 'bg-white': !dark }"
-  class="text-gray-500 txt flex justify-between"
+  [ngClass]="{
+    'bg-gray-900': dark,
+    'bg-white': !dark,
+    'text-white': dark,
+    'text-gray-900': !dark
+  }"
+  class="txt flex justify-between"
 >
   <p class="pl-3">Where in the world?</p>
   <app-switch (themeChanged)="onThemeChange($event)"></app-switch>
