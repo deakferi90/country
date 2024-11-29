@@ -1,0 +1,12 @@
+<div
+  [ngClass]="{
+    'bg-gray-900': currentTheme === 'dark',
+    'bg-white': currentTheme === 'light'
+  }"
+  class="text-gray-500 txt flex justify-between"
+>
+  <p class="pl-3">Where in the world?</p>
+
+  <!-- Theme Toggle Switch -->
+  <app-switch (toggle)="onThemeToggle()"></app-switch>
+</div>
