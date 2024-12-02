@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, EventEmitter, Output } from '@angular/core';
 import { ThemeService } from '../services/theme.service';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
@@ -13,6 +13,7 @@ import { SwitchComponent } from './switch/switch.component';
 })
 export class HeaderComponent implements OnInit {
   dark: boolean = false;
+  @Output() themeChanged = new EventEmitter<boolean>();
 
   constructor(
     private themeService: ThemeService,
@@ -21,8 +22,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      this.dark = this.themeService.getCurrentTheme() === 'dark';
-      document.body.className = this.dark ? 'dark' : 'light';
+      const savedTheme = this.themeService.getThemeFromLocalStorage();
+      this.dark = savedTheme === 'dark';
+
+      this.applyThemeClasses();
     }
   }
 
@@ -31,7 +34,16 @@ export class HeaderComponent implements OnInit {
     this.themeService.setThemeToLocalStorage(isDark ? 'dark' : 'light');
 
     if (isPlatformBrowser(this.platformId)) {
-      document.body.className = isDark ? 'dark' : 'light';
+      this.applyThemeClasses();
+    }
+    this.themeChanged.emit(this.dark);
+  }
+
+  private applyThemeClasses(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      document.body.className = this.dark
+        ? 'bg-body-dark text-white'
+        : 'bg-white text-body-dark';
     }
   }
 }

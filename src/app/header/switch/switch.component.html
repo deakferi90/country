@@ -1,6 +1,5 @@
-<div class="grid grid-cols-[0.3fr_1fr]">
+<div (click)="switchTheme()" class="grid grid-cols-[0.3fr_1fr]">
   <svg
-    (click)="switchTheme()"
     class="moon-icon"
     width="20"
     height="20"
@@ -17,7 +16,5 @@
       stroke-width="1.25"
     />
   </svg>
-  <p class="font-semibold text-base pr-3">
-    {{ dark ? "Light " : "Dark " }} Mode
-  </p>
+  <p class="font-semibold text-base pr-3">Dark Mode</p>
 </div>

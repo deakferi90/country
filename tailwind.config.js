@@ -2,7 +2,10 @@ export const content = ["./src/**/*.{html,ts}"];
 export const theme = {
   extend: {
     colors: {
-      "dark-gray": "#111517",
+      "header-dark": "#2B3844",
+      "body-dark": "#202C36",
+      "dark-input": "#2B3844",
+      "light-input": "#ffffff",
     },
   },
 };

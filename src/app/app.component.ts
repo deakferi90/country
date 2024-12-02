@@ -11,6 +11,10 @@ import { MainPageComponent } from './main-page/main-page.component';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  dark: boolean = true;
+  dark: boolean = false;
   title = 'countries';
+
+  themeChange() {
+    this.dark = !this.dark;
+  }
 }

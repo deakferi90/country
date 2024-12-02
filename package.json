@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "nx serve",
     "build": "npx tailwindcss -o dist/output.css",
     "dev": "npx tailwindcss -o dist/output.css --watch",
-    "test": "ng test",
+    "test": "nx test",
     "serve:ssr:countries": "node dist/countries/server/server.mjs"
   },
   "private": true,
@@ -30,8 +30,13 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.2.3",
+    "@angular-devkit/core": "^18.2.3",
+    "@angular-devkit/schematics": "^18.2.3",
     "@angular/cli": "^18.2.3",
     "@angular/compiler-cli": "^18.2.0",
+    "@nx/angular": "20.1.4",
+    "@nx/workspace": "20.1.4",
+    "@schematics/angular": "^18.2.3",
     "@types/express": "^4.17.17",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",
@@ -42,6 +47,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "nx": "20.1.4",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15",
     "typescript": "~5.5.2"
