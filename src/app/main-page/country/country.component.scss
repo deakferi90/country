@@ -48,6 +48,14 @@
   margin: 10px 0;
 }
 
+@media (max-width: 2500px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 30px;
+    justify-items: center;
+  }
+}
+
 @media (max-width: 1900px) {
   .grid-container {
     grid-template-columns: repeat(2, 1fr);
