@@ -1,5 +1,5 @@
 #country {
-  width: 30%;
+  width: 70%;
   height: 56px;
 }
 
@@ -9,6 +9,7 @@
 
 .text-header-dark {
   color: #2b3844;
+  background-color: transparent;
 }
 
 .text-light-input {
@@ -66,9 +67,26 @@
   }
 
   .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
-    &:hover {
-      background-color: inherit !important;
-      color: #2b3844 !important;
-    }
+    color: #2b3844 !important;
   }
+
+  .mat-mdc-option:focus.mdc-list-item,
+  .mat-mdc-option.mat-mdc-option-active.mdc-list-item {
+    color: #2b3844 !important;
+  }
+
+  .mat-mdc-option[aria-selected="true"] {
+    background-color: transparent !important;
+    color: inherit !important;
+  }
+}
+
+.main-page-container {
+  overflow: auto;
+  display: block;
+  height: 95vh;
+}
+
+.full-width {
+  width: 100vw;
 }

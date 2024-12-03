@@ -43,7 +43,7 @@ export class HeaderComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       document.body.className = this.dark
         ? 'bg-body-dark text-white'
-        : 'bg-white text-body-dark';
+        : 'text-body-dark';
     }
   }
 }
