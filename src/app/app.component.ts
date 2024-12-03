@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { MainPageComponent } from './main-page/main-page.component';
@@ -10,9 +10,15 @@ import { MainPageComponent } from './main-page/main-page.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   dark: boolean = false;
   title = 'countries';
+
+  ngOnInit(): void {
+    window.addEventListener('beforeunload', function () {
+      localStorage.removeItem('theme');
+    });
+  }
 
   themeChange() {
     this.dark = !this.dark;
