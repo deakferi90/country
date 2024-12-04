@@ -1,5 +1,5 @@
 #country {
-  width: 70%;
+  width: 400px;
   height: 56px;
 }
 
@@ -14,10 +14,6 @@
 
 .text-light-input {
   color: #ffffff;
-}
-
-.text-header-dark {
-  color: #2b3844;
 }
 
 .mat-form-field.mat-focused .mat-form-field-label {
@@ -89,4 +85,18 @@
 
 .full-width {
   width: 100vw;
+}
+
+@media screen and (max-width: 667px) {
+  .smaller-screen {
+    display: block !important;
+
+    svg {
+      margin-top: -15px;
+    }
+  }
+  #country {
+    width: 350px;
+    margin-bottom: 30px;
+  }
 }

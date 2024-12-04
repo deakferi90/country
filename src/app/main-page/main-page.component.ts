@@ -23,9 +23,10 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MainPageComponent {
   @Input() dark!: boolean;
-  searchText = '';
+  searchText: string = '';
+  selectedContinent: string = '';
+  selectedRegion: string = '';
   isDropdownOpen = false;
-  selectedContinent: string | undefined;
   dataUrl = 'assets/data.json';
   countries: any = [];
   continents: string[] = ['Africa', 'America', 'Asia', 'Europe', 'Oceania'];
@@ -43,6 +44,8 @@ export class MainPageComponent {
       country.name.toLowerCase().includes(this.searchText.toLowerCase())
     );
   }
+
+  selectByRegion() {}
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;
