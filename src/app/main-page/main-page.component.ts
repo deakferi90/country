@@ -24,28 +24,61 @@ import { HttpClient } from '@angular/common/http';
 export class MainPageComponent {
   @Input() dark!: boolean;
   searchText: string = '';
-  selectedContinent: string = '';
-  selectedRegion: string = '';
+  selectedRegion: string = 'All'; // Default to 'All'
   isDropdownOpen = false;
   dataUrl = 'assets/data.json';
   countries: any = [];
-  continents: string[] = ['Africa', 'America', 'Asia', 'Europe', 'Oceania'];
+  filterCountries: any = []; // This will store the filtered countries
+  continents: string[] = [
+    'Africa',
+    'All',
+    'Americas',
+    'Asia',
+    'Europe',
+    'Polar',
+    'Oceania',
+  ];
 
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.http.get(this.dataUrl).subscribe((data) => {
       this.countries = data;
+      this.filterCountries = data;
     });
   }
 
-  filteredCountries(): any[] {
-    return this.countries.filter((country: { name: string }) =>
+  filteredCountries(): void {
+    if (this.selectedRegion === 'All') {
+      this.filterCountries = this.countries.filter(
+        (country: { name: string }) =>
+          country.name.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
+
+    let regionFiltered = this.countries.filter(
+      (country: { region: string }) => country.region === this.selectedRegion
+    );
+
+    this.filterCountries = regionFiltered.filter((country: { name: string }) =>
       country.name.toLowerCase().includes(this.searchText.toLowerCase())
     );
   }
 
-  selectByRegion() {}
+  filterByRegion(): void {
+    if (this.selectedRegion === 'All') {
+      this.filterCountries = this.countries.filter(
+        (country: { name: string }) =>
+          country.name.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    } else {
+      this.filteredCountries();
+    }
+  }
+
+  onSearchTextChange(): void {
+    this.filteredCountries();
+  }
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;

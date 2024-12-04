@@ -60,6 +60,9 @@
 
   div.mat-mdc-select-panel {
     padding: 0 !important;
+    max-height: 200px;
+    overflow-y: auto;
+    position: relative;
   }
 
   .mat-mdc-option:hover:not(.mdc-list-item--disabled) {
@@ -96,7 +99,7 @@
     }
   }
   #country {
-    width: 350px;
+    width: -webkit-fill-available;
     margin-bottom: 30px;
   }
 }

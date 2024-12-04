@@ -1,5 +1,14 @@
 <div class="grid-container">
-  <div *ngFor="let country of countries" class="grid-item">
+  <div
+    *ngFor="let country of filterCountries"
+    [ngClass]="{
+      'bg-light-input': !dark,
+      'bg-header-dark': dark,
+      'text-light-input': dark,
+      'text-header-dark': !dark
+    }"
+    class="grid-item"
+  >
     <div class="img-container">
       <img [src]="country.flag" alt="{{ country.name }} flag" />
     </div>

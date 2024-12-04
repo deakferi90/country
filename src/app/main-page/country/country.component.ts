@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CountryComponent {
   @Input() searchText!: string;
-  dataUrl = 'assets/data.json';
+  @Input() dark!: boolean;
   @Input() countries: any = [];
+  @Input() filterCountries: any = [];
 }

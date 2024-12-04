@@ -16,6 +16,7 @@
         />
       </svg>
       <input
+        matInput
         [ngClass]="{
           'bg-header-dark': dark,
           'bg-light-input': !dark,
@@ -23,7 +24,7 @@
           'text-header-dark': !dark
         }"
         [(ngModel)]="searchText"
-        (keyup)="filteredCountries()"
+        (keyup)="onSearchTextChange()"
         type="text"
         id="country"
         class="border border-gray-300 text-sm rounded-lg pl-10 pr-3 py-2.5 w-full"
@@ -49,8 +50,9 @@
         }"
         >Select by region</mat-label
       >
-
       <mat-select
+        [(value)]="selectedRegion"
+        (selectionChange)="filterByRegion()"
         [ngClass]="{
           'bg-header-dark': dark,
           'bg-light-input': !dark,
@@ -59,14 +61,14 @@
         }"
       >
         <mat-option
+          *ngFor="let continent of continents"
+          [value]="continent"
           [ngClass]="{
             'bg-header-dark': dark,
             'bg-light-input': !dark,
             'text-light-input': dark,
             'text-header-dark': !dark
           }"
-          *ngFor="let continent of continents"
-          value="continent"
         >
           {{ continent }}
         </mat-option>
@@ -74,6 +76,11 @@
     </mat-form-field>
   </div>
   <div class="full-width flex items-center gap-4 pl-6 pr-6 pt-12">
-    <app-country [countries]="filteredCountries()"></app-country>
+    <app-country
+      [searchText]="searchText"
+      [dark]="dark"
+      [countries]="filterCountries"
+      [filterCountries]="filterCountries"
+    ></app-country>
   </div>
 </div>
