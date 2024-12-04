@@ -14,9 +14,9 @@ export class CountryComponent {
   @Input() dark!: boolean;
   @Input() countries: any = [];
   @Input() filterCountries: any = [];
-  @Output() countryClick = new EventEmitter<string>(); // Emit event when a country is clicked
+  @Output() countryClick = new EventEmitter<string>();
 
   onCountryClick(countryName: string): void {
-    this.countryClick.emit(countryName); // Pass the clicked country's name to the parent
+    this.countryClick.emit(countryName);
   }
 }
