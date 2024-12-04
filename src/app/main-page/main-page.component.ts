@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CountryComponent } from './country/country.component';
 import { HttpClient } from '@angular/common/http';
+import { CountryDetailsComponent } from './country-details/country-details.component';
 
 @Component({
   selector: 'app-main-page',
@@ -24,11 +25,11 @@ import { HttpClient } from '@angular/common/http';
 export class MainPageComponent {
   @Input() dark!: boolean;
   searchText: string = '';
-  selectedRegion: string = 'All'; // Default to 'All'
+  selectedRegion: string = 'All';
   isDropdownOpen = false;
   dataUrl = 'assets/data.json';
   countries: any = [];
-  filterCountries: any = []; // This will store the filtered countries
+  filterCountries: any = [];
   continents: string[] = [
     'Africa',
     'All',
@@ -49,19 +50,17 @@ export class MainPageComponent {
   }
 
   filteredCountries(): void {
-    if (this.selectedRegion === 'All') {
-      this.filterCountries = this.countries.filter(
-        (country: { name: string }) =>
-          country.name.toLowerCase().includes(this.searchText.toLowerCase())
-      );
-    }
+    this.filterCountries = this.countries.filter(
+      (country: { region: string; name: string }) => {
+        const isRegionMatch =
+          this.selectedRegion === 'All' ||
+          country.region === this.selectedRegion;
+        const isSearchMatch = country.name
+          .toLowerCase()
+          .includes(this.searchText.toLowerCase());
 
-    let regionFiltered = this.countries.filter(
-      (country: { region: string }) => country.region === this.selectedRegion
-    );
-
-    this.filterCountries = regionFiltered.filter((country: { name: string }) =>
-      country.name.toLowerCase().includes(this.searchText.toLowerCase())
+        return isRegionMatch && isSearchMatch;
+      }
     );
   }
 

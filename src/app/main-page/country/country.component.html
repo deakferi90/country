@@ -8,6 +8,7 @@
       'text-header-dark': !dark
     }"
     class="grid-item"
+    (click)="onCountryClick(country.name)"
   >
     <div class="img-container">
       <img [src]="country.flag" alt="{{ country.name }} flag" />

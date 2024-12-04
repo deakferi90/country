@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { HeaderComponent } from './header/header.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { isPlatformBrowser } from '@angular/common';
@@ -7,7 +7,7 @@ import { isPlatformBrowser } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, MainPageComponent],
+  imports: [RouterModule, HeaderComponent, MainPageComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

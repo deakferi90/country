@@ -31,6 +31,10 @@
   border: 1px solid #ccc;
   display: grid;
 
+  &:hover {
+    cursor: pointer;
+  }
+
   .img-container {
     margin-bottom: 15px;
     width: max-content;

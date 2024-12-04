@@ -78,6 +78,10 @@
     background-color: transparent !important;
     color: inherit !important;
   }
+
+  .mat-mdc-form-field-bottom-align::before {
+    display: none !important;
+  }
 }
 
 .main-page-container {
