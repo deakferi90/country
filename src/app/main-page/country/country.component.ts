@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-country',
@@ -14,9 +13,9 @@ export class CountryComponent {
   @Input() dark!: boolean;
   @Input() countries: any = [];
   @Input() filterCountries: any = [];
-  @Output() countryClick = new EventEmitter<string>();
+  @Output() countrySelected = new EventEmitter<string>();
 
-  onCountryClick(countryName: string): void {
-    this.countryClick.emit(countryName);
+  onSelectCountry(country: string): void {
+    this.countrySelected.emit(country);
   }
 }

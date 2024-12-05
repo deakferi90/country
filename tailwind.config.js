@@ -7,6 +7,9 @@ export const theme = {
       "dark-input": "#2B3844",
       "light-input": "#ffffff",
     },
+    minWidth: {
+      150: "150px", // Custom value for min-width
+    },
   },
 };
 export const plugins = [];

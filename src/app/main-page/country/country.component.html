@@ -8,13 +8,15 @@
       'text-header-dark': !dark
     }"
     class="grid-item"
-    (click)="onCountryClick(country.name)"
+    (click)="onSelectCountry(country)"
   >
     <div class="img-container">
       <img [src]="country.flag" alt="{{ country.name }} flag" />
     </div>
     <h1 class="country-name">{{ country.name }}</h1>
-    <h2 class="country-subtitle">Population: {{ country.population }}</h2>
+    <h2 class="country-subtitle">
+      Population: {{ country.population | number : "1.0-0" }}
+    </h2>
     <h2 class="country-subtitle">Region: {{ country.region }}</h2>
     <h2 class="country-subtitle">Capital: {{ country.capital }}</h2>
   </div>

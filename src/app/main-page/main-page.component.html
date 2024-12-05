@@ -1,3 +1,4 @@
+@if(!selectedCountry && currentRoute === '/') {
 <div class="main-page-container">
   <div class="smaller-screen flex items-center gap-4 pl-6 pr-6 pt-12">
     <div class="relative flex-1">
@@ -81,6 +82,14 @@
       [dark]="dark"
       [countries]="filterCountries"
       [filterCountries]="filterCountries"
+      (countrySelected)="onCountrySelected($event)"
     ></app-country>
   </div>
 </div>
+} @else {
+<app-country-details
+  [dark]="dark"
+  [country]="selectedCountry"
+  (onBack)="redirect()"
+></app-country-details>
+}

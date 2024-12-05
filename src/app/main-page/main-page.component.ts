@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CountryComponent } from './country/country.component';
 import { HttpClient } from '@angular/common/http';
 import { CountryDetailsComponent } from './country-details/country-details.component';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -18,6 +19,7 @@ import { CountryDetailsComponent } from './country-details/country-details.compo
     MatInputModule,
     FormsModule,
     CountryComponent,
+    CountryDetailsComponent,
   ],
   templateUrl: './main-page.component.html',
   styleUrl: './main-page.component.scss',
@@ -28,8 +30,10 @@ export class MainPageComponent {
   selectedRegion: string = 'All';
   isDropdownOpen = false;
   dataUrl = 'assets/data.json';
+  selectedCountry: any = null;
   countries: any = [];
   filterCountries: any = [];
+  currentRoute: string = '';
   continents: string[] = [
     'Africa',
     'All',
@@ -40,13 +44,36 @@ export class MainPageComponent {
     'Oceania',
   ];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = event.url;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.http.get(this.dataUrl).subscribe((data) => {
       this.countries = data;
       this.filterCountries = data;
     });
+  }
+
+  onCountrySelected(country: any) {
+    this.selectedCountry = country;
+    this.router.navigate([`/country/${this.selectedCountry.name}`]);
+    localStorage.setItem(
+      'selectedCountry',
+      JSON.stringify(this.selectedCountry)
+    );
+  }
+
+  onBackToCountryList() {
+    this.selectedCountry = null;
+  }
+
+  redirect() {
+    this.router.navigate(['/']);
   }
 
   filteredCountries(): void {
