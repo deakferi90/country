@@ -9,6 +9,10 @@
   width: 120px;
   margin-bottom: 60px;
 
+  @media screen and (max-width: 1500px) {
+    margin-bottom: 10px;
+  }
+
   &:hover {
     cursor: pointer;
   }
@@ -29,7 +33,7 @@
 
   .img-container {
     max-width: 550px;
-    min-width: 400px;
+    min-width: 350px;
     height: auto;
   }
 
@@ -52,5 +56,27 @@
       justify-content: center;
       align-items: center;
     }
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .custom-flex {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .country-detailed {
+    margin-left: 0px !important;
+    margin-top: 30px;
+  }
+  .columns-parent {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .columns-parent {
+    gap: 12rem !important;
   }
 }

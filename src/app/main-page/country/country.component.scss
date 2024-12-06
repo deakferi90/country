@@ -95,6 +95,7 @@
 @media (max-width: 610px) {
   .grid-container {
     grid-template-columns: 1fr;
+    margin: 0;
   }
   .grid-item {
     .img-container {

@@ -87,9 +87,11 @@
   </div>
 </div>
 } @else {
-<app-country-details
-  [dark]="dark"
-  [country]="selectedCountry"
-  (onBack)="redirect()"
-></app-country-details>
+<div class="height-scroll">
+  <app-country-details
+    [dark]="dark"
+    [country]="selectedCountry"
+    (onBack)="redirect()"
+  ></app-country-details>
+</div>
 }
