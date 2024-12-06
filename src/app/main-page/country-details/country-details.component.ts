@@ -1,25 +1,38 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { CommonModule, isPlatformBrowser, Location } from '@angular/common';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  PLATFORM_ID,
+  Inject,
+  inject,
+} from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-country-details',
   templateUrl: './country-details.component.html',
-  styleUrl: './country-details.component.scss',
+  styleUrls: ['./country-details.component.scss'],
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
 })
 export class CountryDetailsComponent implements OnInit {
   @Input() country: any;
   @Input() dark!: boolean;
   @Output() backToList = new EventEmitter<void>();
   selectedCountry: any;
+  location = inject(Location);
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
   ngOnInit(): void {
-    if (typeof window !== 'undefined' && window.localStorage) {
+    if (isPlatformBrowser(this.platformId)) {
       const savedCountry = localStorage.getItem('selectedCountry');
-
       if (savedCountry) {
         this.selectedCountry = JSON.parse(savedCountry);
       }
@@ -27,8 +40,6 @@ export class CountryDetailsComponent implements OnInit {
   }
 
   onBack() {
-    this.router.navigate(['/']).then(() => {
-      window.location.reload();
-    });
+    this.location.back();
   }
 }

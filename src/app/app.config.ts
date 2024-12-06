@@ -6,6 +6,7 @@ import {
 import {
   provideRouter,
   withComponentInputBinding,
+  withEnabledBlockingInitialNavigation,
   RouterModule,
 } from '@angular/router';
 import { routes } from './app.routes';
@@ -19,7 +20,11 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideAnimations(),
     importProvidersFrom(MatNativeDateModule),
-    provideRouter(routes, withComponentInputBinding()),
+    provideRouter(
+      routes,
+      withComponentInputBinding(),
+      withEnabledBlockingInitialNavigation()
+    ),
     RouterModule,
     provideClientHydration(),
     provideHttpClient(withFetch()),

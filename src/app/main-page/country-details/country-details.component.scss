@@ -30,6 +30,7 @@
 .container-country {
   width: 90%;
   margin: 50px auto;
+  margin-bottom: 80px;
 
   .img-container {
     max-width: 550px;
@@ -59,9 +60,16 @@
   }
 }
 
+.custom-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  column-gap: 10px;
+}
+
 @media screen and (max-width: 1500px) {
   .custom-flex {
-    flex-direction: column;
+    flex-wrap: wrap;
   }
 }
 

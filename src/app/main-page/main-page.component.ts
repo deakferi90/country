@@ -1,13 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CountryComponent } from './country/country.component';
-import { HttpClient } from '@angular/common/http';
 import { CountryDetailsComponent } from './country-details/country-details.component';
-import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -22,9 +22,9 @@ import { NavigationEnd, Router } from '@angular/router';
     CountryDetailsComponent,
   ],
   templateUrl: './main-page.component.html',
-  styleUrl: './main-page.component.scss',
+  styleUrls: ['./main-page.component.scss'],
 })
-export class MainPageComponent {
+export class MainPageComponent implements OnInit {
   @Input() dark!: boolean;
   searchText: string = '';
   selectedRegion: string = 'All';
@@ -53,31 +53,41 @@ export class MainPageComponent {
   }
 
   ngOnInit(): void {
+    // Load countries
     this.http.get(this.dataUrl).subscribe((data) => {
       this.countries = data;
       this.filterCountries = data;
+
+      // Retrieve the selected region and search text from localStorage (browser only)
+      if (typeof window !== 'undefined' && window.localStorage) {
+        const savedRegion = localStorage.getItem('selectedRegion');
+        const savedSearchText = localStorage.getItem('searchText');
+
+        if (savedRegion) {
+          this.selectedRegion = savedRegion;
+        }
+
+        if (savedSearchText) {
+          this.searchText = savedSearchText;
+        }
+
+        // Apply the filter for region and search
+        this.filterCountries = this.applyFilters();
+      }
     });
   }
 
-  onCountrySelected(country: any) {
-    this.selectedCountry = country;
-    this.router.navigate([`/country/${this.selectedCountry.name}`]);
-    localStorage.setItem(
-      'selectedCountry',
-      JSON.stringify(this.selectedCountry)
-    );
+  filterByRegion(): void {
+    // Save selected region to localStorage (browser only)
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('selectedRegion', this.selectedRegion);
+    }
+
+    this.filterCountries = this.applyFilters();
   }
 
-  onBackToCountryList() {
-    this.selectedCountry = null;
-  }
-
-  redirect() {
-    this.router.navigate(['/']);
-  }
-
-  filteredCountries(): void {
-    this.filterCountries = this.countries.filter(
+  applyFilters(): any[] {
+    return this.countries.filter(
       (country: { region: string; name: string }) => {
         const isRegionMatch =
           this.selectedRegion === 'All' ||
@@ -91,19 +101,36 @@ export class MainPageComponent {
     );
   }
 
-  filterByRegion(): void {
-    if (this.selectedRegion === 'All') {
-      this.filterCountries = this.countries.filter(
-        (country: { name: string }) =>
-          country.name.toLowerCase().includes(this.searchText.toLowerCase())
+  onSearchTextChange(): void {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('searchText', this.searchText);
+    }
+
+    this.filterCountries = this.applyFilters();
+  }
+
+  onCountrySelected(country: any) {
+    this.selectedCountry = country;
+    this.router.navigate([`/country/${this.selectedCountry.name}`]);
+    setTimeout(() => {
+      window.location.reload();
+    }, 0);
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem(
+        'selectedCountry',
+        JSON.stringify(this.selectedCountry)
       );
-    } else {
-      this.filteredCountries();
     }
   }
 
-  onSearchTextChange(): void {
-    this.filteredCountries();
+  onBackToCountryList(): void {
+    this.selectedCountry = null;
+    this.router.navigate(['/']);
+  }
+
+  redirect(): void {
+    this.selectedCountry = null;
+    this.router.navigate(['/']);
   }
 
   toggleDropdown(): void {
