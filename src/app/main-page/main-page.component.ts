@@ -36,6 +36,7 @@ export class MainPageComponent implements OnInit {
   currentRoute: string = '';
   continents: string[] = [
     'Africa',
+    'All',
     'Americas',
     'Asia',
     'Europe',
@@ -58,6 +59,7 @@ export class MainPageComponent implements OnInit {
     this.http.get(this.dataUrl).subscribe((data) => {
       this.countries = data;
       this.filterCountries = data;
+      console.log(this.countries);
 
       if (typeof window !== 'undefined' && window.localStorage) {
         const savedRegion = localStorage.getItem('selectedRegion');
@@ -81,13 +83,25 @@ export class MainPageComponent implements OnInit {
       localStorage.setItem('selectedRegion', this.selectedRegion);
     }
 
-    this.filterCountries = this.applyFilters();
+    if (this.selectedRegion === 'All') {
+      this.filterCountries = this.applyFilters(true);
+    } else {
+      this.filterCountries = this.applyFilters();
+    }
   }
 
-  applyFilters(): any[] {
+  applyFilters(showAll: boolean = false): any[] {
+    if (showAll) {
+      return this.countries.filter((country: { name: string }) =>
+        country.name.toLowerCase().includes(this.searchText.toLowerCase())
+      );
+    }
+
     return this.countries.filter(
       (country: { region: string; name: string }) => {
-        const isRegionMatch = country.region === this.selectedRegion;
+        const isRegionMatch =
+          this.selectedRegion === 'All' ||
+          country.region === this.selectedRegion;
         const isSearchMatch = country.name
           .toLowerCase()
           .includes(this.searchText.toLowerCase());

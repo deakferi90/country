@@ -29,14 +29,12 @@
   text-align: center;
   border-radius: 8px;
   border: 1px solid #ccc;
-  display: grid;
 
   &:hover {
     cursor: pointer;
   }
 
   .img-container {
-    width: max-content;
     height: auto;
     margin: 0 auto;
 
@@ -57,10 +55,6 @@
   .grid-container {
     column-gap: 40px;
   }
-
-  .grid-item {
-    width: fit-content;
-  }
 }
 
 @media screen and (max-width: 1240px) {
@@ -76,19 +70,11 @@
     justify-items: center;
     column-gap: 10px;
   }
-
-  .grid-item {
-    width: fit-content;
-  }
 }
 
 @media (max-width: 912px) {
   .grid-container {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .grid-item {
-    width: fit-content;
   }
 }
 

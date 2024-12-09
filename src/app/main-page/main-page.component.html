@@ -87,7 +87,7 @@
   </div>
 </div>
 } @else {
-<div class="height-scroll">
+<div class="height-scroll" *ngIf="selectedCountry">
   <app-country-details
     [dark]="dark"
     [country]="selectedCountry"
