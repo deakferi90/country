@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
       window.addEventListener('beforeunload', () => {
-        localStorage.removeItem('theme');
+        localStorage.setItem('dark', JSON.stringify(this.dark));
       });
     }
   }

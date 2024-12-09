@@ -27,7 +27,7 @@ import { CountryDetailsComponent } from './country-details/country-details.compo
 export class MainPageComponent implements OnInit {
   @Input() dark!: boolean;
   searchText: string = '';
-  selectedRegion: string = 'All';
+  selectedRegion: string = 'Africa';
   isDropdownOpen = false;
   dataUrl = 'assets/data.json';
   selectedCountry: any = null;
@@ -36,7 +36,6 @@ export class MainPageComponent implements OnInit {
   currentRoute: string = '';
   continents: string[] = [
     'Africa',
-    'All',
     'Americas',
     'Asia',
     'Europe',
@@ -109,7 +108,7 @@ export class MainPageComponent implements OnInit {
   onCountrySelected(country: any) {
     this.selectedCountry = country;
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('theme', JSON.stringify(this.dark));
+      localStorage.setItem('dark', JSON.stringify(this.dark));
       localStorage.setItem(
         'selectedCountry',
         JSON.stringify(this.selectedCountry)

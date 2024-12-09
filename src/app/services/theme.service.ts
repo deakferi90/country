@@ -20,7 +20,7 @@ export class ThemeService {
 
   setThemeToLocalStorage(theme: string): void {
     if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('theme', theme);
+      localStorage.setItem('dark', this.currentTheme);
     }
   }
 
