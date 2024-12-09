@@ -25,10 +25,7 @@ export class CountryDetailsComponent implements OnInit {
   selectedCountry: any;
   location = inject(Location);
 
-  constructor(
-    private router: Router,
-    @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {

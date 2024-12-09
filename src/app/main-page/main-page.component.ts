@@ -47,18 +47,19 @@ export class MainPageComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
+        if (event.url === '/') {
+          this.selectedCountry = null;
+        }
         this.currentRoute = event.url;
       }
     });
   }
 
   ngOnInit(): void {
-    // Load countries
     this.http.get(this.dataUrl).subscribe((data) => {
       this.countries = data;
       this.filterCountries = data;
 
-      // Retrieve the selected region and search text from localStorage (browser only)
       if (typeof window !== 'undefined' && window.localStorage) {
         const savedRegion = localStorage.getItem('selectedRegion');
         const savedSearchText = localStorage.getItem('searchText');
@@ -71,14 +72,12 @@ export class MainPageComponent implements OnInit {
           this.searchText = savedSearchText;
         }
 
-        // Apply the filter for region and search
         this.filterCountries = this.applyFilters();
       }
     });
   }
 
   filterByRegion(): void {
-    // Save selected region to localStorage (browser only)
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.setItem('selectedRegion', this.selectedRegion);
     }
@@ -89,9 +88,7 @@ export class MainPageComponent implements OnInit {
   applyFilters(): any[] {
     return this.countries.filter(
       (country: { region: string; name: string }) => {
-        const isRegionMatch =
-          this.selectedRegion === 'All' ||
-          country.region === this.selectedRegion;
+        const isRegionMatch = country.region === this.selectedRegion;
         const isSearchMatch = country.name
           .toLowerCase()
           .includes(this.searchText.toLowerCase());
@@ -111,16 +108,15 @@ export class MainPageComponent implements OnInit {
 
   onCountrySelected(country: any) {
     this.selectedCountry = country;
-    this.router.navigate([`/country/${this.selectedCountry.name}`]);
-    setTimeout(() => {
-      window.location.reload();
-    }, 0);
     if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem('theme', JSON.stringify(this.dark));
       localStorage.setItem(
         'selectedCountry',
         JSON.stringify(this.selectedCountry)
       );
     }
+
+    this.router.navigate([`/country/${this.selectedCountry.name}`]);
   }
 
   onBackToCountryList(): void {
