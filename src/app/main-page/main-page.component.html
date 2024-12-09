@@ -87,7 +87,10 @@
   </div>
 </div>
 } @else {
-<div class="height-scroll" *ngIf="selectedCountry">
+<div
+  *ngIf="selectedCountry"
+  [ngClass]="selectedCountry ? 'height-scroll' : 'hide'"
+>
   <app-country-details
     [dark]="dark"
     [country]="selectedCountry"

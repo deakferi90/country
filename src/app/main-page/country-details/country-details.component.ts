@@ -22,6 +22,7 @@ export class CountryDetailsComponent implements OnInit {
   @Input() country: any;
   @Input() dark!: boolean;
   @Output() backToList = new EventEmitter<void>();
+
   selectedCountry: any;
   location = inject(Location);
 
@@ -29,6 +30,8 @@ export class CountryDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
+      this.selectedCountry = null;
+
       const savedCountry = localStorage.getItem('selectedCountry');
       if (savedCountry) {
         this.selectedCountry = JSON.parse(savedCountry);
@@ -38,5 +41,13 @@ export class CountryDetailsComponent implements OnInit {
 
   onBack() {
     this.location.back();
+  }
+
+  onCountrySelected(country: any) {
+    this.selectedCountry = null;
+
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('selectedCountry', JSON.stringify(country));
+    }
   }
 }
