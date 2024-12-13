@@ -65,7 +65,8 @@
               <b>Top Level Domain:</b> {{ selectedCountry?.topLevelDomain }}
             </p>
             <p class="block">
-              <b>Currencies:</b> {{ selectedCountry?.currencies[0].name }}
+              <b>Currencies:</b>
+              {{ selectedCountry?.currencies?.[0]?.name ?? '' }}
             </p>
             <p class="block">
               <b>Languages:</b>

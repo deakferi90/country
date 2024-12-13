@@ -27,7 +27,7 @@ import { CountryDetailsComponent } from './country-details/country-details.compo
 export class MainPageComponent implements OnInit {
   @Input() dark!: boolean;
   searchText: string = '';
-  selectedRegion: string = 'Africa';
+  selectedRegion: string = 'All';
   isDropdownOpen = false;
   dataUrl = 'assets/data.json';
   selectedCountry: any = null;
